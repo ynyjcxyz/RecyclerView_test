@@ -42,6 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         Glide.with(context)
+                .asBitmap()
                 .load(contactInfoList.get(position).image())
                 .error(R.drawable.ic_baseline_error_24)
                 .into(holder.round_img);
@@ -50,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.parent_layout.setOnClickListener(view -> {
             Intent intent = new Intent(context, ContactDetail.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //Important
             intent.putExtra("name",contactInfoList.get(position).name());
             intent.putExtra("image",contactInfoList.get(position).image());
             intent.putExtra("phone",contactInfoList.get(position).phone());

@@ -15,7 +15,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String MOVIE_LIST_URL =
-            "https://run.mocky.io/v3/2ed2e179-2063-4440-87ae-cb890191e69c";
+            "https://run.mocky.io/v3/be5b5607-1aad-4e02-935f-d6df54abc102";
     private List<Info> contactInfoList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerAdapter;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(uuid);
 
         DataService dataService = RetrofitClient.getClient().create(DataService.class);
+
         Call <List<Info>> call = dataService.getAllContacts(uuid);
         call.enqueue(new Callback<List<Info>>() {
             @Override
