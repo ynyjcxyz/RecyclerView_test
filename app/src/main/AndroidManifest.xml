@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ContactDetail" />
+        <activity android:name=".ContactDetail"
+                    android:parentActivityName=".MainActivity"/>
 
     </application>
 
