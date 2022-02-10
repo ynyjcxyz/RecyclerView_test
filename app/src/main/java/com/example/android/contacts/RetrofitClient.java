@@ -1,8 +1,6 @@
 package com.example.android.contacts;
 
-import com.chuckerteam.chucker.api.ChuckerInterceptor;
-
-import okhttp3.OkHttpClient;
+import static com.example.android.contacts.GsonUtil.getGson;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,7 +12,7 @@ public class RetrofitClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonUtil.factory())
+                    .addConverterFactory(GsonConverterFactory.create(getGson()))
                     .build();
         }
         return retrofit;
