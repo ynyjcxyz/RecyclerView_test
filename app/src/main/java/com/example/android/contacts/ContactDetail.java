@@ -28,7 +28,6 @@ public class ContactDetail extends AppCompatActivity {
         initView();
         setView();
         intentSet();
-
     }
 
     private void initView() {

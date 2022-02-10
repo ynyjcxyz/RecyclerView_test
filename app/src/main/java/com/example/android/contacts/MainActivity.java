@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        recyclerAdapter = new RecyclerViewAdapter(getApplicationContext(), contactInfoList);
         RetrofitClient
                 .getClient()
                 .create(DataService.class)
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("TAG", "Failed! Response = " + t);
                     }
                 });
-        recyclerAdapter = new RecyclerViewAdapter(getApplicationContext(), contactInfoList);
+
         recyclerView.setAdapter(recyclerAdapter);
     }
 
