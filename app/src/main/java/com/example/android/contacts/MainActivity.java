@@ -24,7 +24,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setRecyclerView();
         bindData();
+    }
+
+    private void setRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAdapter = new RecyclerViewAdapter(getApplicationContext(),contactInfoList);
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     private void bindData() {
@@ -57,12 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onSuccess(List<Info> contactInfo) {
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerAdapter = new RecyclerViewAdapter(getApplicationContext(),contactInfoList);
         recyclerAdapter.setInfoList(contactInfo);
-        recyclerView.setAdapter(recyclerAdapter);
     }
 
     private void onError(Throwable throwable) {
