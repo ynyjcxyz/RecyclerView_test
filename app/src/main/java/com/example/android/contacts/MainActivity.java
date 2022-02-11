@@ -1,7 +1,9 @@
 package com.example.android.contacts;
 
 import static com.example.android.contacts.GetUuid.getUuid;
-import androidx.annotation.NonNull;
+import static com.example.android.contacts.InfoRepository.getDto;
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+import static com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider.from;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,30 +11,31 @@ import android.os.Bundle;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Info> contactInfoList = new ArrayList<>();
+    private final List<Info> contactInfoList = new ArrayList<>();
+    RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SetRecycleView();
+
+        bindData();
     }
 
-    private void SetRecycleView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
+    private void bindData() {
+        getDto(getUuid())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(autoDisposable(from(this)))
+                .subscribe(this::onSuccess,this::onError);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerAdapter = new RecyclerViewAdapter(getApplicationContext(), contactInfoList);
-        RetrofitClient
+        /**沒有使用RxJava時採用此方法*/
+/**        GetService
                 .getClient()
                 .create(DataService.class)
                 .getAllContacts(getUuid())
@@ -50,9 +53,20 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Call<List<Info>> call, @NonNull Throwable t) {
                         Log.d("TAG", "Failed! Response = " + t);
                     }
-                });
+                });*/
+    }
 
+    private void onSuccess(List<Info> contactInfo) {
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAdapter = new RecyclerViewAdapter(getApplicationContext(),contactInfoList);
+        recyclerAdapter.setInfoList(contactInfo);
         recyclerView.setAdapter(recyclerAdapter);
+    }
+
+    private void onError(Throwable throwable) {
+        Log.d("TAG", "Failed! Response = " + throwable);
     }
 
 }

@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
+
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private final Context context;
     private List<Info> contactInfoList;
 
@@ -19,9 +22,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
         this.contactInfoList = contactInfoList;
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
-    public void setInfoList(List<Info> contactInfoList) {
-        this.contactInfoList = contactInfoList;
+    public void setInfoList(List<Info> listAdd) {
+        this.contactInfoList = listAdd;
         notifyDataSetChanged();
     }
 
@@ -30,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.list_item,parent,false));
+                .inflate(R.layout.list_item, parent, false));
     }
 
     @Override
@@ -46,16 +50,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder>{
         holder.parent_layout.setOnClickListener(view -> {
             Intent intent = new Intent(context, ContactDetail.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //Important
-            intent.putExtra("name",contactInfoList.get(position).name());
-            intent.putExtra("image",contactInfoList.get(position).image());
-            intent.putExtra("phone",contactInfoList.get(position).phone());
+            intent.putExtra("name", contactInfoList.get(position).name());
+            intent.putExtra("image", contactInfoList.get(position).image());
+            intent.putExtra("phone", contactInfoList.get(position).phone());
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        if(contactInfoList != null){
+        if (contactInfoList != null) {
             return contactInfoList.size();
         }
         return 0;

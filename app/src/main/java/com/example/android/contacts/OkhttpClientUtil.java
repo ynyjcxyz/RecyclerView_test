@@ -7,10 +7,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class OkhttpClientUtil {
 
     static OkHttpClient buildOkHttpClient(){
-        return new OkHttpClient
-                .Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor
-                        (new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+                        (new HttpLoggingInterceptor()
+                                .setLevel(HttpLoggingInterceptor.Level.BASIC))
                 .build();
     }
 }
