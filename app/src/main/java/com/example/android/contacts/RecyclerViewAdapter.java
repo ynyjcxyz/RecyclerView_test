@@ -26,10 +26,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     @SuppressLint("NotifyDataSetChanged")
     public void setInfoList(List<Info> listAdd) {
         contactInfoList.clear();
-        contactInfoList.addAll(listAdd);
+//        contactInfoList.addAll(listAdd);
+//        notifyDataSetChanged();
+        this.contactInfoList = listAdd;
         notifyDataSetChanged();
-/*        this.contactInfoList = listAdd;
-        notifyDataSetChanged();*/
     }
 
     @NonNull

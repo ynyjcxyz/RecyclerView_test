@@ -68,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
     private void onSuccess(List<Info> contactInfo) {
         recyclerAdapter.setInfoList(contactInfo);
     }
-
     private void onError(Throwable throwable) {
         Log.d("TAG", "Failed! Response = " + throwable);
     }
-
 }
