@@ -11,6 +11,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     LinearLayout parent_layout;
     ImageView round_img;
     TextView contact_name;
+    TextView contact_phone_number;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -18,5 +19,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         parent_layout = itemView.findViewById(R.id.parent_layout);
         round_img = itemView.findViewById(R.id.round_img);
         contact_name = itemView.findViewById(R.id.contact_name);
+        contact_phone_number = itemView.findViewById(R.id.contact_phone_number);
     }
 }

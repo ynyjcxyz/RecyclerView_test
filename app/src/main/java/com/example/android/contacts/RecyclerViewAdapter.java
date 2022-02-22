@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
@@ -25,7 +26,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @SuppressLint("NotifyDataSetChanged")
     public void setInfoList(List<Info> listAdd) {
-        contactInfoList.clear();
 //        contactInfoList.addAll(listAdd);
 //        notifyDataSetChanged();
         this.contactInfoList = listAdd;
@@ -49,6 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
                 .into(holder.round_img);
 
         holder.contact_name.setText(contactInfoList.get(position).name());
+        holder.contact_phone_number.setText(contactInfoList.get(position).phone());
 
         holder.parent_layout.setOnClickListener(view -> {
             Intent intent = new Intent(context, ContactDetail.class);
